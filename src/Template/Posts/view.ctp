@@ -77,6 +77,15 @@
               <?php endforeach; ?>
             </td>
         </tr>
+        <tr><?php debug($post);?>
+          <th><?= __('Media') ?></th>
+          <td>
+            <?php foreach ($post->medias as $media): ?>
+              <?= h($media->name) ?>
+            <?php endforeach; ?>
+          </td>
+        </tr>
+
     </table>
     <div class="row">
         <h4><?= __('Summary') ?></h4>

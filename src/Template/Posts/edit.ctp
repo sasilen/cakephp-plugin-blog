@@ -35,6 +35,8 @@
             echo $this->Form->control('auth');
             echo $this->Form->control('darken');
             echo $this->Form->input('tags');
+            echo $this->Media->iframe('Blog.Posts',$post->id);
+
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

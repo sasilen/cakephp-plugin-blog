@@ -36,6 +36,16 @@ class PostsTable extends Table
 
         $this->addBehavior('Muffin/Tags.Tag');
 
+        $this->addBehavior('Media.Media', [
+          'path' => 'img/upload/%y/%m/%f',  // default upload path relative to webroot folder (see below for path parameters)
+          'extensions' => ['jpg', 'png'],   // array of authorized extensions (lowercase)
+          'limit' => 0,           // limit number of upload file. Default: 0 (no limit)
+          'max_width' => 0,         // maximum authorized width for uploaded pictures. Default: 0 (no limitation) 
+          'max_height' => 0,          // maximum authorized height for uploaded pictures. Default: 0 (no limitation)
+          'size' => 0             // maximum autorized size for uploaded pictures (in kb). Default: 0 (no limitation)
+          ]
+        );
+
         $this->setTable('posts');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');

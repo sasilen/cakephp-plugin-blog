@@ -19,7 +19,7 @@ class PostsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users','Tags']
+            'contain' => ['Users','Tags','Media']
         ];
         $posts = $this->paginate($this->Posts);
 
@@ -37,7 +37,7 @@ class PostsController extends AppController
     public function view($id = null)
     {
         $post = $this->Posts->get($id, [
-            'contain' => ['Users','Tags']
+            'contain' => ['Users','Tags','Media']
         ]);
 
         $this->set('post', $post);
@@ -76,7 +76,7 @@ class PostsController extends AppController
     public function edit($id = null)
     {
         $post = $this->Posts->get($id, [
-            'contain' => ['Tags']
+            'contain' => ['Tags','Media','Users']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
