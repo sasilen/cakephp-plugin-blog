@@ -1,0 +1,25 @@
+{
+    "name": "sasilen/Blog",
+    "description": "Blog plugin for CakePHP",
+    "type": "cakephp-plugin",
+    "require": {
+        "php": ">=5.5.9",
+        "cakephp/cakephp": ">=3.3.2 <4.0.0",
+        "romano83/cakephp3-media": "dev-master",
+        "muffin/tags": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Blog\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Blog\\Test\\": "tests",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+        }
+    }
+}
