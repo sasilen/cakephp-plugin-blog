@@ -10,7 +10,6 @@ use Cake\ORM\Entity;
  * @property string $slug
  * @property string $name
  * @property string $summary
- * @property string $parent_id
  * @property string $body
  * @property bool $published
  * @property string $user_id
@@ -22,10 +21,7 @@ use Cake\ORM\Entity;
  * @property bool $auth
  * @property bool $darken
  *
- * @property \Blog\Model\Entity\ParentPost $parent_post
  * @property \Blog\Model\Entity\User $user
- * @property \Blog\Model\Entity\ChildPost[] $child_posts
- * @property \Blog\Model\Entity\Category[] $categories
  */
 class Post extends Entity
 {

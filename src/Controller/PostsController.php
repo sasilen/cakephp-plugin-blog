@@ -19,7 +19,7 @@ class PostsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['ParentPosts', 'Users']
+            'contain' => ['Users','Tags']
         ];
         $posts = $this->paginate($this->Posts);
 
@@ -37,7 +37,7 @@ class PostsController extends AppController
     public function view($id = null)
     {
         $post = $this->Posts->get($id, [
-            'contain' => ['ParentPosts', 'Users', 'Categories', 'ChildPosts']
+            'contain' => ['Users','Tags']
         ]);
 
         $this->set('post', $post);
@@ -61,10 +61,8 @@ class PostsController extends AppController
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        $parentPosts = $this->Posts->ParentPosts->find('list', ['limit' => 200]);
         $users = $this->Posts->Users->find('list', ['limit' => 200]);
-        $categories = $this->Posts->Categories->find('list', ['limit' => 200]);
-        $this->set(compact('post', 'parentPosts', 'users', 'categories'));
+        $this->set(compact('post', 'users'));
         $this->set('_serialize', ['post']);
     }
 
@@ -78,7 +76,7 @@ class PostsController extends AppController
     public function edit($id = null)
     {
         $post = $this->Posts->get($id, [
-            'contain' => ['Categories']
+            'contain' => ['Tags']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
@@ -89,10 +87,16 @@ class PostsController extends AppController
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        $parentPosts = $this->Posts->ParentPosts->find('list', ['limit' => 200]);
         $users = $this->Posts->Users->find('list', ['limit' => 200]);
-        $categories = $this->Posts->Categories->find('list', ['limit' => 200]);
-        $this->set(compact('post', 'parentPosts', 'users', 'categories'));
+        // Manage Tags
+        $delimiter = ','; // same as delimiter at TagBehavior
+        $tags = [];
+        $alltags = $post->tags;
+        foreach ($alltags as $tag):
+          $tags[] = $tag->label;
+        endforeach;
+        $post->tags = implode($delimiter, $tags);
+        $this->set(compact('post', 'users'));
         $this->set('_serialize', ['post']);
     }
 

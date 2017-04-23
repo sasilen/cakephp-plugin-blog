@@ -9,10 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Posts Model
  *
- * @property \Cake\ORM\Association\BelongsTo $ParentPosts
  * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \Cake\ORM\Association\HasMany $ChildPosts
- * @property \Cake\ORM\Association\BelongsToMany $Categories
  *
  * @method \Blog\Model\Entity\Post get($primaryKey, $options = [])
  * @method \Blog\Model\Entity\Post newEntity($data = null, array $options = [])
@@ -37,30 +34,18 @@ class PostsTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Muffin/Tags.Tag');
+
         $this->setTable('posts');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('ParentPosts', [
-            'className' => 'Blog.Posts',
-            'foreignKey' => 'parent_id'
-        ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
+            'joinType' => 'LEFT',
             'className' => 'Blog.Users'
-        ]);
-        $this->hasMany('ChildPosts', [
-            'className' => 'Blog.Posts',
-            'foreignKey' => 'parent_id'
-        ]);
-        $this->belongsToMany('Categories', [
-            'foreignKey' => 'post_id',
-            'targetForeignKey' => 'category_id',
-            'joinTable' => 'categories_posts',
-            'className' => 'Blog.Categories'
         ]);
     }
 
@@ -127,7 +112,6 @@ class PostsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['parent_id'], 'ParentPosts'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;

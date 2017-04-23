@@ -9,8 +9,6 @@
         <li><?= $this->Html->link(__('New Post'), ['action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="posts index large-9 medium-8 columns content">
@@ -40,7 +38,7 @@
                 <td><?= $this->Number->format($post->id) ?></td>
                 <td><?= h($post->slug) ?></td>
                 <td><?= h($post->name) ?></td>
-                <td><?= $post->has('parent_post') ? $this->Html->link($post->parent_post->name, ['controller' => 'Posts', 'action' => 'view', $post->parent_post->id]) : '' ?></td>
+                <td><?= h($post->parent_id) ?></td>
                 <td><?= h($post->published) ?></td>
                 <td><?= $post->has('user') ? $this->Html->link($post->user->id, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?></td>
                 <td><?= h($post->created) ?></td>
