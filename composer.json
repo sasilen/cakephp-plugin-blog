@@ -1,5 +1,5 @@
 {
-    "name": "sasilen/Blog",
+    "name": "sasilen/cakephp-plugin-blog",
     "description": "Blog plugin for CakePHP",
     "type": "cakephp-plugin",
     "require": {
