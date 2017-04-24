@@ -46,7 +46,7 @@ class PostsTable extends Table
           ]
         );
 
-        $this->setTable('posts');
+        $this->setTable('blog_posts');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
@@ -92,23 +92,8 @@ class PostsTable extends Table
             ->allowEmpty('published');
 
         $validator
-            ->dateTime('startdate')
-            ->allowEmpty('startdate');
-
-        $validator
-            ->dateTime('enddate')
-            ->allowEmpty('enddate');
-
-        $validator
-            ->allowEmpty('link');
-
-        $validator
             ->boolean('auth')
             ->allowEmpty('auth');
-
-        $validator
-            ->boolean('darken')
-            ->allowEmpty('darken');
 
         return $validator;
     }
