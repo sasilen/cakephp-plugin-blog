@@ -33,7 +33,7 @@ composer require google/recaptcha
 
 ## Configuration
 
-### Users
+### [CakeDC/Users](https://github.com/CakeDC/users/blob/master/Docs/Home.md)
 ```
 bin/cake migrations migrate -p CakeDC/Users
 ```
