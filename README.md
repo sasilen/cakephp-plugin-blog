@@ -30,3 +30,37 @@ composer require robthree/twofactorauth
 composer require google/recaptcha
 # composer require friendsofcake/bootstrap-ui
 ```
+
+## Configuration
+
+### [CakeDC/Users](https://github.com/CakeDC/users/blob/master/Docs/Home.md)
+```
+bin/cake migrations migrate -p CakeDC/Users
+```
+config/bootstrap.php
+```
+Configure::write('Users.config', ['users']);
+Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
+Configure::write('Users.Social.login', true); //to enable social login
+```
+config/users.php
+```
+return [
+    'OAuth.providers.facebook.options.clientId' => 'YOUR APP ID',
+    'OAuth.providers.facebook.options.clientSecret' => 'YOUR APP SECRET',
+    'OAuth.providers.twitter.options.clientId' => 'YOUR APP ID',
+    'OAuth.providers.twitter.options.clientSecret' => 'YOUR APP SECRET',
+    //etc
+];
+```
+src/Controller/AppController.php
+```
+   public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Flash');
+        $this->loadComponent('CakeDC/Users.UsersAuth');
+    }
+```
+
+
