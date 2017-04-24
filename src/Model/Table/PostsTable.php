@@ -46,7 +46,7 @@ class PostsTable extends Table
           ]
         );
 
-        $this->setTable('blog_posts');
+        $this->setTable('posts');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
