@@ -19,16 +19,11 @@
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('slug') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('parent_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('published') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('startdate') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('enddate') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('link') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('auth') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('darken') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -38,16 +33,11 @@
                 <td><?= $this->Number->format($post->id) ?></td>
                 <td><?= h($post->slug) ?></td>
                 <td><?= h($post->name) ?></td>
-                <td><?= h($post->parent_id) ?></td>
                 <td><?= h($post->published) ?></td>
                 <td><?= $post->has('user') ? $this->Html->link($post->user->id, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?></td>
                 <td><?= h($post->created) ?></td>
                 <td><?= h($post->modified) ?></td>
-                <td><?= h($post->startdate) ?></td>
-                <td><?= h($post->enddate) ?></td>
-                <td><?= h($post->link) ?></td>
                 <td><?= h($post->auth) ?></td>
-                <td><?= h($post->darken) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $post->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $post->id]) ?>

@@ -9,9 +9,8 @@
         <li><?= $this->Html->link(__('Edit Post'), ['action' => 'edit', $post->id]) ?> </li>
         <li><?= $this->Form->postLink(__('Delete Post'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Posts'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Post'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('New Post'), ['plugin'=>'Blog','controller'=>'posts','action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Users'), ['plugin'=>'Users','controller' => 'Users', 'action' => 'index']) ?> </li>
     </ul>
 </nav>
 <div class="posts view large-9 medium-8 columns content">
@@ -26,16 +25,8 @@
             <td><?= h($post->name) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Parent Id') ?></th>
-            <td><?= h($post->parent_id) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('User') ?></th>
             <td><?= $post->has('user') ? $this->Html->link($post->user->id, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Link') ?></th>
-            <td><?= h($post->link) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -50,24 +41,12 @@
             <td><?= h($post->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Startdate') ?></th>
-            <td><?= h($post->startdate) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Enddate') ?></th>
-            <td><?= h($post->enddate) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Published') ?></th>
             <td><?= $post->published ? __('Yes') : __('No'); ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Auth') ?></th>
             <td><?= $post->auth ? __('Yes') : __('No'); ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Darken') ?></th>
-            <td><?= $post->darken ? __('Yes') : __('No'); ?></td>
         </tr>
         <tr>
             <th><?= __('Tags') ?></th>
