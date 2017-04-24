@@ -35,7 +35,7 @@ class PostsTable extends Table
         parent::initialize($config);
 
         $this->addBehavior('Muffin/Tags.Tag');
-
+        $this->addBehavior('Romano83/Cakephp3Draft.Draft');
         $this->addBehavior('Media.Media', [
           'path' => 'img/upload/%y/%m/%f',  // default upload path relative to webroot folder (see below for path parameters)
           'extensions' => ['jpg', 'png'],   // array of authorized extensions (lowercase)
