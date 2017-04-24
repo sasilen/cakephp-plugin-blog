@@ -68,5 +68,14 @@ src/Controller/AppController.php
         $this->loadComponent('CakeDC/Users.UsersAuth');
     }
 ```
-
-
+### [Romano83/CakePHP3-Media](https://github.com/Romano83/CakePHP3-Media)
+src/Controller/AppController
+```
+public function canUploadMedias($model, $id)
+  { 
+    if($model === 'www\Model\Table\UsersTable' && $id == $this->Auth->user('id')){
+      return true; // Everyone can upload medias for their own records
+    }
+    return $this->Auth->user('role') == 'admin'; // Admins have all rights
+  }
+```
