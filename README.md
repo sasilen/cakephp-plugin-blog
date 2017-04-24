@@ -29,6 +29,10 @@ composer require league/oauth1-client
 composer require robthree/twofactorauth
 composer require google/recaptcha
 # composer require friendsofcake/bootstrap-ui
+
+#  Enable plugins
+bin/cake plugin load -r Blog
+
 ```
 
 ## Configuration
