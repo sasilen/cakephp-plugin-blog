@@ -6,6 +6,7 @@
         "php": ">=5.5.9",
         "cakephp/cakephp": ">=3.3.2 <4.0.0",
         "romano83/cakephp3-media": "dev-master",
+        "romano83/cakephp3-draft": "1.*",
         "muffin/tags": "dev-master"
     },
     "require-dev": {
