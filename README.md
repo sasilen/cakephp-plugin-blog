@@ -32,6 +32,8 @@ composer require google/recaptcha
 
 #  Enable plugins
 bin/cake plugin load -r Blog
+bin/cake plugin load -r Media
+bin/cake plugin load Tags
 
 ```
 
