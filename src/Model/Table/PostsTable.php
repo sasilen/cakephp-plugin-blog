@@ -37,8 +37,9 @@ class PostsTable extends Table
         $this->addBehavior('Muffin/Tags.Tag');
         $this->addBehavior('Romano83/Cakephp3Draft.Draft');
         $this->addBehavior('Media.Media', [
-          'path' => 'img/upload/%y/%m/%f',  // default upload path relative to webroot folder (see below for path parameters)
-          'extensions' => ['jpg', 'png'],   // array of authorized extensions (lowercase)
+          'path' => '../../img/Posts/%f',  // default upload path relative to webroot folder (see below for path parameters)
+          'extensions' => ['jpg','png','gif','bmp','pdf','nef'],
+#          'extensions' => ['jpg', 'png'],   // array of authorized extensions (lowercase)
           'limit' => 0,           // limit number of upload file. Default: 0 (no limit)
           'max_width' => 0,         // maximum authorized width for uploaded pictures. Default: 0 (no limitation) 
           'max_height' => 0,          // maximum authorized height for uploaded pictures. Default: 0 (no limitation)
@@ -72,10 +73,6 @@ class PostsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('slug', 'create')
-            ->notEmpty('slug');
-
-        $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
@@ -88,8 +85,8 @@ class PostsTable extends Table
             ->notEmpty('body');
 
         $validator
-            ->boolean('published')
-            ->allowEmpty('published');
+            ->boolean('online')
+            ->allowEmpty('online');
 
         $validator
             ->boolean('auth')

@@ -7,10 +7,9 @@ class Initial extends AbstractMigration
     {
 
         $this->table('blog_posts')
-            ->addColumn('slug', 'string', [
-                'default' => null,
-                'limit' => 255,
-                'null' => false,
+            ->addColumn('id', 'integer', [
+                'autoIncrement' => true,
+                'limit' => 11
             ])
             ->addColumn('name', 'string', [
                 'default' => null,
@@ -27,7 +26,7 @@ class Initial extends AbstractMigration
                 'limit' => 16777215,
                 'null' => false,
             ])
-            ->addColumn('published', 'boolean', [
+            ->addColumn('online', 'boolean', [
                 'default' => null,
                 'limit' => null,
                 'null' => true,
@@ -62,6 +61,7 @@ class Initial extends AbstractMigration
                     'name',
                 ]
             )
+            ->addPrimaryKey('id')
             ->create();
     }
 

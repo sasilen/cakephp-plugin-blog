@@ -6,20 +6,16 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Post'), ['action' => 'edit', $post->id]) ?> </li>
+        <li><?= $this->Html->link(__('Edit Post'), ['plugin'=>'Blog','controller'=>'posts','action' => 'edit', $post->id]) ?> </li>
         <li><?= $this->Form->postLink(__('Delete Post'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Posts'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('List Posts'), ['plugin'=>'Blog','controller'=>'posts','action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Post'), ['plugin'=>'Blog','controller'=>'posts','action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['plugin'=>'Users','controller' => 'Users', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('List Users'), ['plugin'=>'CakeDC/Users','controller' => 'Users', 'action' => 'index']) ?> </li>
     </ul>
 </nav>
 <div class="posts view large-9 medium-8 columns content">
     <h3><?= h($post->name) ?></h3>
     <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Slug') ?></th>
-            <td><?= h($post->slug) ?></td>
-        </tr>
         <tr>
             <th scope="row"><?= __('Name') ?></th>
             <td><?= h($post->name) ?></td>
@@ -41,8 +37,8 @@
             <td><?= h($post->modified) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Published') ?></th>
-            <td><?= $post->published ? __('Yes') : __('No'); ?></td>
+            <th scope="row"><?= __('Online') ?></th>
+            <td><?= $post->online ? __('Yes') : __('No'); ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Auth') ?></th>
@@ -56,11 +52,16 @@
               <?php endforeach; ?>
             </td>
         </tr>
-        <tr><?php debug($post);?>
+        <tr>
           <th><?= __('Media') ?></th>
           <td>
-            <?php foreach ($post->medias as $media): ?>
-              <?= h($media->name) ?>
+            <?php foreach ($post->media as $media): 
+            echo $this->Html->link(
+              $this->Html->image(
+                array('plugin'=>'Media','controller' => 'medias','action' => 'display',$media->id),
+                array('height'=>'95','width'=>'95','class'=>'pull-left thumbnail')),
+                array('plugin'=>'Media','controller'=>'medias','action' => 'display',$media->id),
+                array('escape'=>false,'data-dialog')); ?>
             <?php endforeach; ?>
           </td>
         </tr>

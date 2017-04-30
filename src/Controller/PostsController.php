@@ -18,10 +18,25 @@ class PostsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users','Tags','Media']
-        ];
-        $posts = $this->paginate($this->Posts);
+        $tags = $this->request->getQuery('tags');
+        
+        if (!is_null($tags)) :
+            $query = $this->Posts->find()
+                ->contain([
+                    'Media',
+                    'Users',
+                    'Tags'])
+                ->matching('Tags', function ($q) use ($tags) {
+                    return $q->where(['Tags.label LIKE "'. $tags[0] .'"']);
+                })
+                ->order('Posts.created DESC');
+        else:
+            $query = $this->Posts->find()
+                ->contain(['Tags','Users','Media'])
+                ->order('Posts.created DESC');
+        endif;
+        
+        $posts = $this->paginate($query);
 
         $this->set(compact('posts'));
         $this->set('_serialize', ['posts']);
@@ -60,6 +75,8 @@ class PostsController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
+        } else {
+#          $post->id = $this->Posts->getDraftId($this->Posts);
         }
         $users = $this->Posts->Users->find('list', ['limit' => 200]);
         $this->set(compact('post', 'users'));
@@ -110,8 +127,13 @@ class PostsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $post = $this->Posts->get($id);
+        $post = $this->Posts->get($id, [
+            'contain' => ['Tags','Media','Users']
+        ]);
         if ($this->Posts->delete($post)) {
+            foreach($post['media'] as $media) {;
+                $this->Posts->Media->delete($media);
+            }
             $this->Flash->success(__('The post has been deleted.'));
         } else {
             $this->Flash->error(__('The post could not be deleted. Please, try again.'));

@@ -13,7 +13,6 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Posts'), ['plugin'=>'Blog','controller'=>'posts','action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['plugin'=>'Users','controller' => 'Users', 'action' => 'index']) ?></li>
     </ul>
 </nav>
 <div class="posts form large-9 medium-8 columns content">
@@ -21,11 +20,10 @@
     <fieldset>
         <legend><?= __('Edit Post') ?></legend>
         <?php
-            echo $this->Form->control('slug');
             echo $this->Form->control('name');
             echo $this->Form->control('summary');
             echo $this->Form->control('body');
-            echo $this->Form->control('published');
+            echo $this->Form->control('online');
             echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('auth');
             echo $this->Form->input('tags');
