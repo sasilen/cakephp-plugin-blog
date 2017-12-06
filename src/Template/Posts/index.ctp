@@ -2,6 +2,7 @@
 
 use Cake\I18n\Date;
 use Thumber\Utility\ThumbCreator;
+use Cake\View\Helper\BreadcrumbsHelper;
 /**
   * @var \App\View\AppView $this
   */
@@ -9,17 +10,24 @@ use Thumber\Utility\ThumbCreator;
 <?= $this->Html->css('Blog.timeline',['block' => 'css']);?>
 <?= $this->Html->css('Blog.swipebox.min',['block' => 'css']); ?>
 <?= $this->Html->script('Blog.jquery.swipebox.min',['block' => 'script']); ?>
-<!--<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Post'), ['plugin'=>'blog','controller'=>'posts','action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['plugin'=>'CakeDC/Users','controller' => 'users', 'action' => 'index']) ?></li>
-    </ul>
-</nav>
--->
 
 <div class="posts index large-12 medium-10 columns content">
-    <h3><?= __('Posts') ?></h3>
+
+<?php
+$this->Breadcrumbs->templates([
+    'wrapper' => '<ol class="breadcrumb">{{content}}</ol>',
+    'separator' => '<li{{attrs}}>{{separator}}</li>'
+]);
+$this->Breadcrumbs->add('Posts',['plugin'=>'Blog','controller' => 'posts', 'action' => 'index'],['class'=>'breadcrumb-item']);
+$this->Breadcrumbs->add('index',null,['class'=>'breadcrumb-item active']);
+foreach ($tags as $tag) :
+	$this->Breadcrumbs->add($tag['label'],['plugin'=>'Blog','controller' => 'posts', 'action' => 'index','tags'=>[ $tag['label'] ] ],['class'=>'badge badge-warning']);
+endforeach;
+echo $this->Breadcrumbs->render(
+    ['separator' => '/']
+);
+?>
+
 
     <ul class="timeline">
     <?php $i=0; ?>
@@ -40,20 +48,7 @@ use Thumber\Utility\ThumbCreator;
             <?= $post->body ?>
             <div>
               <?php foreach ($post->media as $media):
-                if (!file_exists('../../img/thumbs/Posts/'.basename($media->file)) || !file_exists('../../img/swipebox/Posts/'.basename($media->file))) :
-                    $thumber = new ThumbCreator('../../../img/Posts/'.basename($media->file));
-                    $thumber->fit(100,100);
-                    $thumb = $thumber->save([ 'target'=>'../../../img/thumbs/Posts/'.basename($media->file),'format'=>'jpg' ]);
-                    $thumber = new ThumbCreator('../../../img/Posts/'.basename($media->file));
-                    $thumber->resize(1280,720);
-                    $thumb = $thumber->save([ 'target'=>'../../../img/swipebox/Posts/'.basename($media->file),'format'=>'jpg' ]);
-                endif;
-                echo $this->Html->link(
-                $this->Html->image(
-                  array('plugin'=>'Media','controller' => 'medias','action' => 'display',$media->id),
-                  array('class'=>'pull-left img-thumbnail')),
-                  array('plugin'=>'Media','controller'=>'medias','action' => 'display',$media->id,'swipebox'),
-                  array('class'=>'swipebox','escape'=>false));?>
+            		echo $this->Html->link($this->Blog->display($media),array('plugin'=>'Blog','controller'=>'posts','action' => 'view',$post->id),array('escape' => false));?>
               <?php endforeach; ?>
             </div>
           </div>

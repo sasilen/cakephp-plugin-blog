@@ -6,8 +6,5 @@ use App\Controller\AppController as BaseController;
 
 class AppController extends BaseController
 {
-  public $helpers = [
-    'Thumber.Thumb',
-    'Media.Media',
-  ];
+	public $helpers = ['CakeDC/Users.AuthLink','Media.Media','Thumber.Thumb','Blog.Blog','Paginator' => ['templates' => 'paginator-templates']];
 }

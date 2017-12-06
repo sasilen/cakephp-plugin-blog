@@ -35,11 +35,11 @@ class PostsController extends AppController
                 ->contain(['Tags','Users','Media'])
                 ->order('Posts.created DESC');
         endif;
-        
+				$tags = $this->Posts->Tags->find()->select(['label'])->distinct(['label'])->all();
         $posts = $this->paginate($query);
 
-        $this->set(compact('posts'));
-        $this->set('_serialize', ['posts']);
+        $this->set(compact('posts','tags'));
+        $this->set('_serialize', ['posts','tags']);
     }
 
     /**
@@ -104,7 +104,7 @@ class PostsController extends AppController
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
-        $users = $this->Posts->Users->find('list', ['limit' => 200]);
+				$users = $this->Posts->Users->find('list', ['limit' => 200,'keyField'=>'id','valueField'=>'username']);
         // Manage Tags
         $delimiter = ','; // same as delimiter at TagBehavior
         $tags = [];

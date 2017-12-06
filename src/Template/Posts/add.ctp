@@ -3,26 +3,43 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Posts'), ['plugin'=>'Blog','controller'=>'posts','action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['plugin'=>'CakeDC/Users','controller' => 'users', 'action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="posts form large-9 medium-8 columns content">
-    <?= $this->Form->create($post) ?>
+<?php
+$this->Breadcrumbs->templates([
+    'wrapper' => '<ol class="breadcrumb">{{content}}</ol>',
+    'separator' => '<li{{attrs}}>{{separator}}</li>'
+]);
+$this->Breadcrumbs->add('Posts',['plugin'=>'Blog','controller' => 'posts', 'action' => 'index'],['class'=>'breadcrumb-item']);
+$this->Breadcrumbs->add('Edit',null,['class'=>'breadcrumb-item active']);
+echo $this->Breadcrumbs->render(
+    ['separator' => '/']
+);
+?>
+<div class="row">
+<div class="form-group col-sm-12">
+    <?= $this->Form->create($post,['class'=>'form-horizontal']) ?>
     <fieldset>
-        <legend><?= __('Add Post') ?></legend>
         <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('summary');
-            echo $this->Form->control('body');
-            echo $this->Form->control('online');
-            echo $this->Form->control('user_id', ['options' => $users]);
-            echo $this->Form->control('auth');
-            echo $this->Form->input('tags');
-
+            echo $this->Form->control('name',['label' => ['class' => 'col-sm-2 control-label', 'text' => __('Name')]]);
+            echo $this->Form->control('summary',['cols'=>'70','label' => ['class' => 'col-sm-2 control-label', 'text' => __('Summary')]]);
+            echo $this->Form->control('body',['cols'=>'70','label' => ['class' => 'col-sm-2 control-label', 'text' => __('Body')]]);
+            echo $this->Form->control('user_id', ['default'=>$post['user_id'],'options' => $users,'label' => ['class' => 'col-sm-2 control-label', 'text' => __('Online')]]);
+            echo $this->Form->control('online', [
+              'label' => ['text' => __('Online'),'class' => 'col-sm-2 control-label'],
+              'type' => 'select',
+              'multiple' => false,
+              'default' => 1,
+              'options' => [1 => __('Yes',true), 0 => __('No',true)],
+              'empty' => false
+            ]);
+            echo $this->Form->control('auth', [
+              'label' => ['text' => __('Auth'),'class' => 'col-sm-2 control-label'],
+              'type' => 'select',
+              'multiple' => false,
+              'default' => 1,
+              'options' => [1 => __('Yes',true), 0 => __('No',true)],
+              'empty' => false
+            ]);
+            echo $this->Form->input('tags',['label' => ['class' => 'col-sm-2 control-label', 'text' => __('Tags')]]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
