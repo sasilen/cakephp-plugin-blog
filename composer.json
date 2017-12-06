@@ -1,12 +1,18 @@
 {
     "name": "sasilen/blog",
-    "description": "Blog plugin for CakePHP",
+    "description": "Blog plugin for CakePHP 3",
     "type": "cakephp-plugin",
     "require": {
-        "php": ">=5.5.9",
-        "cakephp/cakephp": ">=3.3.2 <4.0.0",
+        "cakephp/cakephp": "^3.5",
+        "cakedc/users": "^5.0",
+        "league/oauth2-facebook": "^2.0",
+        "league/oauth2-google": "^2.0",
+	    "league/oauth1-client": "@stable",
         "romano83/cakephp3-media": "dev-master",
         "romano83/cakephp3-draft": "1.*",
+        "mirko-pagliai/cakephp-thumber": "^1.0",
+        "kareylo/cakephp-comments": "^0.0.4",
+        "dereuromark/cakephp-ratings": "dev-master"  
         "muffin/tags": "dev-master"
     },
     "require-dev": {
