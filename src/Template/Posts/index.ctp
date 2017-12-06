@@ -32,8 +32,8 @@ use Thumber\Utility\ThumbCreator;
           <div class="timeline-heading">
             <h4 style="margin-bottom:0px"> <?= $this->Html->link(h($post->name),['plugin'=>'blog','controller'=>'posts','action' => 'view',$post->id]); ?> 
                 <span style="float:right;padding:0">
-                 <?= $this->Html->link($this->Html->icon('pencil'),['plugin'=>'blog','controller'=>'posts','action' => 'edit',$post->id],['escape'=>false]);?>
-                 <?= $this->Form->postLink($this->Html->icon('remove'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id),'escape'=>false]) ?>
+                 <?= $this->Html->link($this->Html->image('Blog.ic_mode_edit_black_24px.svg'),['plugin'=>'blog','controller'=>'posts','action' => 'edit',$post->id],['escape'=>false]);?>
+                 <?= $this->Form->postLink($this->Html->image('ic_delete_forever_black_24px.svg'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id),'escape'=>false]) ?>
                 </span></h4>
           </div>
           <div class="timeline-body panel-body" style="padding:0px 15px 15px 15px">
@@ -61,7 +61,7 @@ use Thumber\Utility\ThumbCreator;
             <div style="float:left">
               <?php 
                   foreach ($post->tags as $tag): 
-                      echo $this->Html->link($this->Html->label($tag->label),['plugin'=>'blog','controller'=>'posts','action' => 'index','tags'=>[$tag->label]],['escape'=>false]);
+                      echo $this->Html->link('<span class="badge badge-default">'.$tag->label.'</span>',['plugin'=>'blog','controller'=>'posts','action' => 'index','tags'=>[$tag->label]],['escape'=>false]);
                    endforeach; ?>
               <?php 
                 $time = new Date($post->created);
