@@ -9,7 +9,9 @@ The recommended way to install composer packages is:
 ## Scratch installation example 
 ```
 composer self-update && composer create-project --prefer-dist cakephp/app www
-cd www; composer config repositories.blog git https://github.com/sasilen/cakephp-plugin-blog.git
+cd www 
+composer config repositories.blog git https://github.com/sasilen/cakephp-plugin-blog.git
+composer config repositories.media git https://github.com/sasilen/CakePHP3-Media.git
 composer config minimum-stability dev
 composer require sasilen/Blog:dev-master
 
