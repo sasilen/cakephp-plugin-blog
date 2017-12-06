@@ -6,37 +6,23 @@ You can install this plugin into your CakePHP application using [composer](http:
 
 The recommended way to install composer packages is:
 
-```
-composer require sasilen/Blog
-```
 ## Scratch installation example 
-
-### CakePHP
 ```
 composer self-update && composer create-project --prefer-dist cakephp/app www
-```
-Change in to the freshly created directory 'www' and add to composer.json
-```
-"minimum-stability": "dev"
-```
-### Blog / Users / other plugins
-```
-composer require sasilen/Blog
-composer require cakedc/users
-composer require league/oauth2-google
-composer require league/oauth2-facebook
-composer require league/oauth1-client
-composer require robthree/twofactorauth
-composer require google/recaptcha
-# composer require friendsofcake/bootstrap-ui
+cd www 
+composer config repositories.blog git https://github.com/sasilen/cakephp-plugin-blog.git
+composer config repositories.media git https://github.com/sasilen/CakePHP3-Media.git
+composer config minimum-stability dev
+composer require sasilen/Blog:dev-master
 
+```
 #  Enable plugins
-bin/cake plugin load -r Blog
-bin/cake plugin load -r Media
-bin/cake plugin load Tags
-
+cake plugin load -r -b CakeDC/Users
+cake plugin load -r -b Thumber
+cake plugin load -r Blog
+cake plugin load -r Media
+cake plugin load Muffin/Tags
 ```
-
 ## Configuration
 
 ### [CakeDC/Users](https://github.com/CakeDC/users/blob/master/Docs/Home.md)
