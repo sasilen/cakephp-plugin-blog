@@ -3,7 +3,7 @@
     "description": "Blog plugin for CakePHP 3",
     "type": "cakephp-plugin",
     "require": {
-        "cakephp/cakephp": "3.4.*",
+        "cakephp/cakephp": "^3.5",
         "cakedc/users": "^5.2",
         "league/oauth2-facebook": "^2.0",
         "league/oauth2-google": "^2.0",
