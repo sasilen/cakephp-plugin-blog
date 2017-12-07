@@ -14,9 +14,9 @@ composer config repositories.blog git https://github.com/sasilen/cakephp-plugin-
 composer config repositories.media git https://github.com/sasilen/CakePHP3-Media.git
 composer config minimum-stability dev
 composer require sasilen/Blog:dev-master
-
 ```
-#  Enable plugins
+##  Enable plugins
+```
 cake plugin load -r -b CakeDC/Users
 cake plugin load -r -b Thumber
 cake plugin load -r Blog
