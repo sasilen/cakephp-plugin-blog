@@ -21,7 +21,7 @@ $this->Breadcrumbs->templates([
 $this->Breadcrumbs->add('Posts',['plugin'=>'Blog','controller' => 'posts', 'action' => 'index'],['class'=>'breadcrumb-item']);
 $this->Breadcrumbs->add('index',null,['class'=>'breadcrumb-item active']);
 foreach ($tags as $tag) :
-	$this->Breadcrumbs->add($tag['label'],['plugin'=>'Blog','controller' => 'posts', 'action' => 'index','tags'=>[ $tag['label'] ] ],['class'=>'badge badge-warning']);
+	$this->Breadcrumbs->add($tag['label'],['plugin'=>'Blog','controller' => 'posts', 'action' => 'index','tags'=>[ $tag['label'] ] ],['class'=>'badge badge-warning ml-1 float-right']);
 endforeach;
 echo $this->Breadcrumbs->render(
     ['separator' => '/']
