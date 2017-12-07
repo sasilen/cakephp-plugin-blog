@@ -4,7 +4,7 @@
     "type": "cakephp-plugin",
     "require": {
         "cakephp/cakephp": "^3.5",
-        "cakedc/users": "^5.0",
+        "cakedc/users": "dev-develop",
         "league/oauth2-facebook": "^2.0",
         "league/oauth2-google": "^2.0",
 	"league/oauth1-client": "@stable",
