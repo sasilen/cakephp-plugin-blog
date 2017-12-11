@@ -8,8 +8,8 @@ use Cake\View\Helper\BreadcrumbsHelper;
   */
 ?>
 <?= $this->Html->css('Blog.timeline',['block' => 'css']);?>
-<?= $this->Html->css('Blog.swipebox.min',['block' => 'css']); ?>
-<?= $this->Html->script('Blog.jquery.swipebox.min',['block' => 'script']); ?>
+<?= $this->Html->css('Blog.lightbox',['block' => 'css']); ?>
+<?= $this->Html->script('Blog.lightbox',['block' => 'scriptTop']); ?>
 
 <div class="posts index large-12 medium-10 columns content">
 
@@ -28,7 +28,6 @@ echo $this->Breadcrumbs->render(
 );
 ?>
 
-
     <ul class="timeline">
     <?php $i=0; ?>
       <?php foreach ($posts as $post): $i++;?> 
@@ -37,22 +36,26 @@ echo $this->Breadcrumbs->render(
           <a><i class="fa fa-circle" id=""></i></a>
         </div>
         <div class="timeline-panel">
-          <div class="timeline-heading">
-            <h4 style="margin-bottom:0px"> <?= $this->Html->link(h($post->name),['plugin'=>'blog','controller'=>'posts','action' => 'view',$post->id]); ?> 
+          <div class="timeline-heading card-header">
+            <h5 style="margin-bottom:0px"> <?= $this->Html->link(h($post->name),['plugin'=>'blog','controller'=>'posts','action' => 'view',$post->id]); ?> 
                 <span style="float:right;padding:0">
-                 <?= $this->Html->link($this->Html->image('Blog.ic_mode_edit_black_24px.svg'),['plugin'=>'blog','controller'=>'posts','action' => 'edit',$post->id],['escape'=>false]);?>
-                 <?= $this->Form->postLink($this->Html->image('ic_delete_forever_black_24px.svg'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id),'escape'=>false]) ?>
-                </span></h4>
+                 <?= $this->AuthLink->link($this->Html->image('Blog.ic_mode_edit_black_24px.svg'),['plugin'=>'blog','controller'=>'posts','action' => 'edit',$post->id],['escape'=>false]);?>
+								 <?php if ($this->AuthLink->isAuthorized(['plugin'=>'blog','controller'=>'posts','action' => 'delete',$post->id])) : ?>	
+	                 <?= $this->Form->postLink($this->Html->image('ic_delete_forever_black_24px.svg'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id),'escape'=>false]) ?>
+								<?php endif; ?>
+                </span></h5>
           </div>
           <div class="timeline-body panel-body" style="padding:0px 15px 15px 15px">
             <?= $post->body ?>
             <div>
               <?php foreach ($post->media as $media):
-            		echo $this->Html->link($this->Blog->display($media),array('plugin'=>'Blog','controller'=>'posts','action' => 'view',$post->id),array('escape' => false));?>
+//            		echo $this->Html->link($this->Blog->display($media),array('plugin'=>'Blog','controller'=>'posts','action' => 'view',$post->id),array('class'=>'swipebox','escape' => false));
+								echo $this->Blog->display($media,'raw');
+							?>
               <?php endforeach; ?>
             </div>
           </div>
-          <div class="timeline-footer panel-footer">
+          <div class="timeline-footer card-footer">
             <div style="float:left">
               <?php 
                   foreach ($post->tags as $tag): 
@@ -67,7 +70,8 @@ echo $this->Breadcrumbs->render(
                 $age .= ($interval->m!=0) ? $interval->m."kk ":"";
                 $age .= ($interval->d!=0) ? $interval->d."pv"  :"";?>
             </div><div style="float:right">
-                <p class="text-right"><?= $post->has('user') ? $this->Html->link($post->user->id, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?><?=$age;?>  @ <?= $time->format('d-m-Y H:i:s'); ?> </p>
+                <p class="text-right"><?= $post->has('user') ? $this->Html->link($post->user->username, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?><?=$age;?>  @ <?= $time->format('d-m-Y H:i:s'); ?> </p>
+						<div style="clear:both"/>
             </div>
           </div>
         </div>
@@ -87,10 +91,48 @@ echo $this->Breadcrumbs->render(
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
 </div>
-<script type="text/javascript">
-;( function( $ ) {
-
-        $( '.swipebox' ).swipebox();
-
-} )( jQuery );
+<script>
+	$(function(){
+		var $gallery = $('.gallery a').simpleLightbox();
+		$gallery.on('show.simplelightbox', function(){
+			console.log('Requested for showing');
+		})
+		.on('shown.simplelightbox', function(){
+			console.log('Shown');
+		})
+		.on('close.simplelightbox', function(){
+			console.log('Requested for closing');
+		})
+		.on('closed.simplelightbox', function(){
+			console.log('Closed');
+		})
+		.on('change.simplelightbox', function(){
+			console.log('Requested for change');
+		})
+		.on('next.simplelightbox', function(){
+			console.log('Requested for next');
+		})
+		.on('prev.simplelightbox', function(){
+			console.log('Requested for prev');
+		})
+		.on('nextImageLoaded.simplelightbox', function(){
+			console.log('Next image loaded');
+		})
+		.on('prevImageLoaded.simplelightbox', function(){
+			console.log('Prev image loaded');
+		})
+		.on('changed.simplelightbox', function(){
+			console.log('Image changed');
+		})
+		.on('nextDone.simplelightbox', function(){
+			console.log('Image changed to next');
+		})
+		.on('prevDone.simplelightbox', function(){
+			console.log('Image changed to prev');
+		})
+		.on('error.simplelightbox', function(e){
+			console.log('No image found, go to the next/prev');
+			console.log(e);
+		});
+	});
 </script>

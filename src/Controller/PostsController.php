@@ -29,11 +29,13 @@ class PostsController extends AppController
                 ->matching('Tags', function ($q) use ($tags) {
                     return $q->where(['Tags.label LIKE "'. $tags[0] .'"']);
                 })
-                ->order('Posts.created DESC');
+                ->order('Posts.created DESC')
+								->where(['Posts.online'=>1]);
         else:
             $query = $this->Posts->find()
                 ->contain(['Tags','Users','Media'])
-                ->order('Posts.created DESC');
+                ->order('Posts.created DESC')
+								->where(['Posts.online'=>1]);
         endif;
 				$tags = $this->Posts->Tags->find()->select(['label'])->distinct(['label'])->all();
         $posts = $this->paginate($query);

@@ -38,7 +38,7 @@ class BlogHelper extends Helper
 			if ($mode=='raw') :
 				return $this->Html->link($this->display($media,'thumbs'),
 																 array('plugin'=>'Media','controller' => 'medias','action' => 'display',$media->id,'swipebox'),
-																 array('escape' => false));
+																 array('escape' => false,'class'=>'swipebox','data-lightbox'=>'gallery'));
 			endif;
          return $this->Html->image(
             array('plugin'=>'Media','controller' => 'medias','action' => 'display',$media->id,$mode),
