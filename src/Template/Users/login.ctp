@@ -12,7 +12,7 @@
 use Cake\Core\Configure;
 
 ?>
-<div class="card">
+<div class="card my-2 mx-auto">
     <?= $this->Flash->render('auth') ?>
     <?= $this->Form->create() ?>
     <fieldset>
@@ -32,7 +32,7 @@ use Cake\Core\Configure;
             ]);
         }
         ?>
-        <?php
+        <?php /*
         $registrationActive = Configure::read('Users.Registration.active');
         if ($registrationActive) {
             echo $this->Html->link(__d('CakeDC/Users', 'Register'), ['action' => 'register']);
@@ -42,7 +42,7 @@ use Cake\Core\Configure;
                 echo ' | ';
             }
             echo $this->Html->link(__d('CakeDC/Users', 'Reset Password'), ['action' => 'requestResetPassword']);
-        }
+        }*/
         ?>
     </fieldset>
     <?= implode(' ', $this->User->socialLoginList()); ?>

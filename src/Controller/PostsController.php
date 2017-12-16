@@ -19,6 +19,8 @@ class PostsController extends AppController
     public function index()
     {
         $tags = $this->request->getQuery('tags');
+				$where = ['Posts.online'=>1];
+				if ($this->Auth->user('is_superuser')) $where = [1=>1];
         
         if (!is_null($tags)) :
             $query = $this->Posts->find()
@@ -30,12 +32,12 @@ class PostsController extends AppController
                     return $q->where(['Tags.label LIKE "'. $tags[0] .'"']);
                 })
                 ->order('Posts.created DESC')
-								->where(['Posts.online'=>1]);
+								->where($where);
         else:
             $query = $this->Posts->find()
                 ->contain(['Tags','Users','Media'])
                 ->order('Posts.created DESC')
-								->where(['Posts.online'=>1]);
+								->where($where);
         endif;
 				$tags = $this->Posts->Tags->find()->select(['label'])->distinct(['label'])->all();
         $posts = $this->paginate($query);

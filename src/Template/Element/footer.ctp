@@ -9,7 +9,7 @@
 			?>
 			</span>
 			<span class="justify-content-center col-md-4">
-      <?='Copyright by ';?>
+      <?='Copyright by laukkoski.com';?>
       <?=' 2017';?>
 			</span>
 			<span class="col-md-2" style="float:right";>

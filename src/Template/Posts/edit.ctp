@@ -45,6 +45,8 @@ echo $this->Breadcrumbs->render(
               'options' => [1 => __('Yes',true), 0 => __('No',true)],
               'empty' => false
             ]);
+            echo $this->Form->control('created',['label' => ['class' => 'col-sm-2 control-label', 'text' => __('Created')]]);
+
             echo $this->Form->input('tags',['label' => ['class' => 'col-sm-2 control-label', 'text' => __('Tags')]]);
             echo $this->Media->iframe('Blog.Posts',$post->id);
         ?>

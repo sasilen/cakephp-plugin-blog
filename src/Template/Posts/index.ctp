@@ -20,8 +20,9 @@ $this->Breadcrumbs->templates([
 ]);
 $this->Breadcrumbs->add('Posts',['plugin'=>'Blog','controller' => 'posts', 'action' => 'index'],['class'=>'breadcrumb-item']);
 $this->Breadcrumbs->add('index',null,['class'=>'breadcrumb-item active']);
+$this->Breadcrumbs->add($this->AuthLink->link($this->Html->image('Blog.ic_note_add_black_24px.svg'),['plugin'=>'Blog','controller'=>'posts','action' => 'add'],['escape'=>false,'class'=>'float-right']));
 foreach ($tags as $tag) :
-	$this->Breadcrumbs->add($tag['label'],['plugin'=>'Blog','controller' => 'posts', 'action' => 'index','tags'=>[ $tag['label'] ] ],['class'=>'badge badge-warning ml-1 float-right']);
+	$this->Breadcrumbs->add($tag['label'],['plugin'=>'Blog','controller' => 'posts', 'action' => 'index','tags'=>[ $tag['label'] ] ],['class'=>'badge badge-info ml-1 float-right']);
 endforeach;
 echo $this->Breadcrumbs->render(
     ['separator' => '/']
@@ -39,6 +40,9 @@ echo $this->Breadcrumbs->render(
           <div class="timeline-heading card-header">
             <h5 style="margin-bottom:0px"> <?= $this->Html->link(h($post->name),['plugin'=>'blog','controller'=>'posts','action' => 'view',$post->id]); ?> 
                 <span style="float:right;padding:0">
+								<?php if (!$post->online) : ?>
+									 <span class="badge badge-warning">draft</span>
+								<?php endif; ?>
                  <?= $this->AuthLink->link($this->Html->image('Blog.ic_mode_edit_black_24px.svg'),['plugin'=>'blog','controller'=>'posts','action' => 'edit',$post->id],['escape'=>false]);?>
 								 <?php if ($this->AuthLink->isAuthorized(['plugin'=>'blog','controller'=>'posts','action' => 'delete',$post->id])) : ?>	
 	                 <?= $this->Form->postLink($this->Html->image('ic_delete_forever_black_24px.svg'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id),'escape'=>false]) ?>
@@ -59,7 +63,7 @@ echo $this->Breadcrumbs->render(
             <div style="float:left">
               <?php 
                   foreach ($post->tags as $tag): 
-                      echo $this->Html->link('<span class="badge badge-default">'.$tag->label.'</span>',['plugin'=>'blog','controller'=>'posts','action' => 'index','tags'=>[$tag->label]],['escape'=>false]);
+                      echo $this->Html->link('<span class="badge badge-info ml-1">'.$tag->label.'</span>',['plugin'=>'blog','controller'=>'posts','action' => 'index','tags'=>[$tag->label]],['escape'=>false]);
                    endforeach; ?>
               <?php 
                 $time = new Date($post->created);
