@@ -28,7 +28,7 @@ echo $this->Breadcrumbs->render(
             echo $this->Form->control('name',['label' => ['class' => 'col-sm-2 control-label', 'text' => __('Name')]]);
             echo $this->Form->control('summary',['cols'=>'70','label' => ['class' => 'col-sm-2 control-label', 'text' => __('Summary')]]);
             echo $this->Form->control('body',['cols'=>'70','label' => ['class' => 'col-sm-2 control-label', 'text' => __('Body')]]);
-            echo $this->Form->control('user_id', ['default'=>$post['user_id'],'options' => $users,'label' => ['class' => 'col-sm-2 control-label', 'text' => __('Online')]]);
+            echo $this->Form->control('user_id', ['default'=>$post['user_id'],'options' => $users,'label' => ['class' => 'col-sm-2 control-label', 'text' => __('User')]]);
 						echo $this->Form->control('online', [
               'label' => ['text' => __('Online'),'class' => 'col-sm-2 control-label'],
               'type' => 'select',

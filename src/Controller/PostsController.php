@@ -82,7 +82,8 @@ class PostsController extends AppController
         } else {
 #          $post->id = $this->Posts->getDraftId($this->Posts);
         }
-        $users = $this->Posts->Users->find('list', ['limit' => 200]);
+				$users = $this->Posts->Users->find('list', ['limit' => 200,'keyField'=>'id','valueField'=>'username']);
+
         $this->set(compact('post', 'users'));
         $this->set('_serialize', ['post']);
     }
