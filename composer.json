@@ -1,38 +1,25 @@
 {
     "name": "sasilen/blog",
-    "description": "Blog plugin for CakePHP 3",
+    "description": "Blog plugin for CakePHP 4",
     "type": "cakephp-plugin",
+    "license": "MIT",
     "require": {
-        "cakephp/cakephp": "^3.4",
-        "cakedc/users": "^5.2",
-        "league/oauth2-facebook": "^2.0",
-        "league/oauth2-google": "^2.0",
-	"league/oauth1-client": "@stable",
-        "romano83/cakephp3-media": "dev-master",
-        "romano83/cakephp3-draft": "1.*",
-        "mirko-pagliai/cakephp-thumber": "^1.0",
-        "kareylo/cakephp-comments": "^0.0.4",
-        "dereuromark/cakephp-ratings": "dev-master",
-        "muffin/tags": "dev-master"
+        "cakephp/cakephp": "~4.1.0",
+        "muffin/tags": "2.0.0-beta"
+
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "^8.0"
     },
     "autoload": {
         "psr-4": {
-            "Blog\\": "src"
+            "Sasilen\\Blog\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Blog\\Test\\": "tests",
+            "Sasilen\\Blog\\Test\\": "tests",
             "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
-        }
-    },
-    "repositories": {
-        "media": {
-            "type": "git",
-            "url": "https://github.com/sasilen/CakePHP3-Media.git"
         }
     }
 }
