@@ -15,7 +15,6 @@ use Cake\View\Helper\BreadcrumbsHelper;
     <?=$this->AuthLink->link('<i class="far fa-file"></i>',['plugin'=>'Sasilen/Blog','controller'=>'posts','action' => 'add'],['escape'=>false]);?>
 </div>
 
-
 <?php
 $this->Breadcrumbs->setTemplates([
     'wrapper' => '<ol class="breadcrumb">{{content}}</ol>',
