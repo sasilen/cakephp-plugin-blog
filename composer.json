@@ -7,7 +7,7 @@
         "cakephp/cakephp": "~4.1.0",
         "muffin/tags": "2.0.0-beta",
         "davidyell/proffer": "dev-cake-4",
-        "mirko-pagliai/cakephp-thumber" : "dev-master"
+        "mirko-pagliai/cakephp-thumber" : "^1.9"
 
     },
     "require-dev": {
