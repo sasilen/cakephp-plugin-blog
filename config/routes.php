@@ -4,7 +4,7 @@ use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
 
 Router::plugin(
-    'Blog',
+    'Sasilen/Blog',
     ['path' => '/blog'],
     function (RouteBuilder $routes) {
         $routes->fallbacks(DashedRoute::class);

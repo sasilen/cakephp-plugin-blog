@@ -1,5 +1,7 @@
 <?php
-namespace Blog\Model\Table;
+declare(strict_types=1);
+
+namespace Sasilen\Blog\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -30,13 +32,29 @@ class PostsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
         $this->addBehavior('Muffin/Tags.Tag');
-        $this->addBehavior('Romano83/Cakephp3Draft.Draft');
-        $this->addBehavior('Media.Media', [
+        $this->hasMany('Medias',['foreignKey' => 'ref_id']);
+        $this->addBehavior('Proffer.Proffer', [
+		'root' => WWW_ROOT . 'files', // Customise the root upload folder here, or omit to use the default
+		'dir' => 'filename',	// The name of the field to store the folder
+		'thumbnailSizes' => [ // Declare your thumbnails
+			'square' => [	// Define the prefix of your thumbnail
+				'w' => 200,	// Width
+				'h' => 200,	// Height
+				'jpeg_quality'	=> 100
+			],
+			'portrait' => [		// Define a second thumbnail
+				'w' => 100,
+				'h' => 300
+			],
+		],
+		'thumbnailMethod' => 'gd'	// Options are Imagick or Gd
+]);
+/*      $this->addBehavior('Media.Media', [
           'path' => '../../img/Posts/%f',  // default upload path relative to webroot folder (see below for path parameters)
           'extensions' => ['jpg','png','gif','bmp','pdf','nef'],
 #          'extensions' => ['jpg', 'png'],   // array of authorized extensions (lowercase)
@@ -46,7 +64,7 @@ class PostsTable extends Table
           'size' => 0             // maximum autorized size for uploaded pictures (in kb). Default: 0 (no limitation)
           ]
         );
-
+ */
         $this->setTable('posts');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
@@ -66,7 +84,7 @@ class PostsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -102,10 +120,9 @@ class PostsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
-
+        $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
         return $rules;
     }
 }

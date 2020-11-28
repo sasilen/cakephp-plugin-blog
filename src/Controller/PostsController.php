@@ -1,12 +1,19 @@
 <?php
-namespace Blog\Controller;
+declare(strict_types=1);
 
-use Blog\Controller\AppController;
+namespace Sasilen\Blog\Controller;
+
+use App\Controller\AppController;
+use Cake\Http\Response;
+use Zend\Diactoros\Stream;
+use Cake\Utility\Hash;
+
 
 /**
  * Posts Controller
+ * 
  *
- * @property \Blog\Model\Table\PostsTable $Posts
+ * @method \Blog\Model\Entity\Result[]|\Cake\Datasource\BlogSetInterface paginate($object = null, array $settings = [])
  */
 class PostsController extends AppController
 {
@@ -19,27 +26,27 @@ class PostsController extends AppController
     public function index()
     {
         $tags = $this->request->getQuery('tags');
-				$where = ['Posts.online'=>1];
-				if ($this->Auth->user('is_superuser')) $where = [1=>1];
-        
+        $where = ['Posts.online'=>1];
+        if ($this->request->getAttribute('identity')->is_superuser) $where = [1=>1];
         if (!is_null($tags)) :
             $query = $this->Posts->find()
                 ->contain([
-                    'Media',
+                    'Medias',
                     'Users',
                     'Tags'])
                 ->matching('Tags', function ($q) use ($tags) {
-                    return $q->where(['Tags.label LIKE "'. $tags[0] .'"']);
+                    return $q->where(['Tags.label LIKE "'. $tags .'"']);
                 })
                 ->order('Posts.created DESC')
-								->where($where);
+                ->where($where);
         else:
             $query = $this->Posts->find()
-                ->contain(['Tags','Users','Media'])
+                ->contain(['Tags','Users','Medias'])
                 ->order('Posts.created DESC')
-								->where($where);
+                ->where($where);
         endif;
-				$tags = $this->Posts->Tags->find()->select(['label'])->distinct(['label'])->all();
+
+        $tags = $this->Posts->Tags->find()->select(['label'])->distinct(['label'])->all();
         $posts = $this->paginate($query);
 
         $this->set(compact('posts','tags'));
@@ -56,7 +63,7 @@ class PostsController extends AppController
     public function view($id = null)
     {
         $post = $this->Posts->get($id, [
-            'contain' => ['Users','Tags','Media']
+            'contain' => ['Users','Tags','Medias']
         ]);
 
         $this->set('post', $post);
@@ -98,7 +105,7 @@ class PostsController extends AppController
     public function edit($id = null)
     {
         $post = $this->Posts->get($id, [
-            'contain' => ['Tags','Media','Users']
+            'contain' => ['Tags','Medias','Users']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
@@ -145,5 +152,18 @@ class PostsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    public function display ($post_id,$media_id=0,$type='thumbs') {
+        $post = $this->Posts->get($post_id, [
+            'contain' => ['Tags','Medias','Users']
+        ]);
+        $filename = Hash::extract($post['medias'], '{n}[id='.$media_id.'].file')[0];
+        $ref= Hash::extract($post['medias'], '{n}[id='.$media_id.'].ref')[0];
+	    $refc = str_replace(".", "", substr($ref, strpos($ref, ".")));
+      	$path = ROOT.'/../img/'.$refc.'/'.$type.'/'.basename($filename);
+        $stream = new Stream($path, 'rb');
+        $this->response = $this->response->withType('jpeg');
+        $response = $this->response->withBody($stream);
+        return $response;
     }
 }

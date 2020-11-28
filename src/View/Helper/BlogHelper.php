@@ -1,8 +1,10 @@
 <?php
 /* src/View/Helper/DisplayHelper.php */
-namespace Blog\View\Helper;
+namespace Sasilen\Blog\View\Helper;
 
 use Cake\View\Helper;
+use Cake\Http\Response;
+use Cake\Http\CallbackStream;
 use Thumber\Utility\ThumbCreator;
 
 class BlogHelper extends Helper
@@ -25,32 +27,26 @@ class BlogHelper extends Helper
       endif;
     }
     
-    public function display($object,$mode='thumbs',$nb=0)
+    public function display($post_id,$media_id=0,$mode='thumbs')
     {
-			if (isset($object['media'][$nb])) :
-				$media = $object['media'][$nb];
-			else : 
-				$media = $object;
-			endif;
 
-      $this->resize($media);
+//        $this->resize($media);
 
-			if ($mode=='raw') :
-				return $this->Html->link($this->display($media,'thumbs'),
-																 array('plugin'=>'Media','controller' => 'medias','action' => 'display',$media->id,'swipebox'),
+        if ($mode=='raw') :
+				return $this->Html->link($this->display($post_id,$media_id,'thumbs'),
+																 array('plugin'=>'Sasilen/Blog','controller' => 'Posts','action' => 'display',$post_id,$media_id,'swipebox'),
 																 array('escape' => false,'class'=>'swipebox','data-lightbox'=>'gallery'));
-			endif;
-         return $this->Html->image(
-            array('plugin'=>'Media','controller' => 'medias','action' => 'display',$media->id,$mode),
+        endif;
+        echo $this->Html->image(
+            array('plugin'=>'Sasilen/Blog','controller' => 'Posts','action' => 'display',$post_id,$media_id,NULL),
             array('class'=>'pull-left img-thumbnail','escape'=>false)
-          );
+        );
 #          array('plugin'=>'Media','controller'=>'medias','action' => 'display',$media->id,$mode),
 #          array('class'=>'swipebox','escape'=>false)
 #        );
 
-
     }
-    
+
     public function galleria($object)
     {    
       foreach(array_keys($object['media']) as $nb) :

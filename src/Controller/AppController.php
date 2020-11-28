@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
-namespace Blog\Controller;
+namespace Sasilen\Blog\Controller;
 
 use App\Controller\AppController as BaseController;
 
 class AppController extends BaseController
 {
-	public $helpers = ['CakeDC/Users.AuthLink','Media.Media','Thumber.Thumb','Blog.Blog','Paginator' => ['templates' => 'paginator-templates']];
+	public $helpers = ['CakeDC/Users.AuthLink','Thumber.Thumb','Blog.Blog','Paginator' => ['templates' => 'paginator-templates']];
 }

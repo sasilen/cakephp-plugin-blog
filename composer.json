@@ -5,7 +5,9 @@
     "license": "MIT",
     "require": {
         "cakephp/cakephp": "~4.1.0",
-        "muffin/tags": "2.0.0-beta"
+        "muffin/tags": "2.0.0-beta",
+        "davidyell/proffer": "dev-cake-4",
+        "mirko-pagliai/cakephp-thumber" : "dev-master"
 
     },
     "require-dev": {
