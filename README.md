@@ -14,3 +14,14 @@ composer require sasilen/blog
 ```
 ./bin/cake plugin load Sasilen/Blog
 ```
+## Add templates (main app)
+```
+# /src/View/AppView.php
+public function initialize(): void
+{
+    parent::initialize();
+    $this->loadHelper('CakeDC/Users.AuthLink');
+    $this->loadHelper('Paginator', ['templates' => 'templates-paginator']);
+    $this->loadHelper('Form', ['templates' => 'templates-form']);
+}
+```
