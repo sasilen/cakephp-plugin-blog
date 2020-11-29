@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Blog\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -11,21 +13,17 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $summary
  * @property string $body
- * @property bool $published
+ * @property bool|null $online
  * @property string $user_id
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
- * @property \Cake\I18n\Time $startdate
- * @property \Cake\I18n\Time $enddate
- * @property string $link
- * @property bool $auth
- * @property bool $darken
+ * @property \Cake\I18n\FrozenTime|null $created
+ * @property \Cake\I18n\FrozenTime|null $modified
+ * @property bool|null $auth
+ * @property int|null $tag_count
  *
  * @property \Blog\Model\Entity\User $user
  */
 class Post extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -37,6 +35,18 @@ class Post extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+        'id' => true,
+//        'slug' => true,
+        'name' => true,
+        'summary' => true,
+        'body' => true,
+        'online' => true,
+        'user_id' => true,
+        'created' => true,
+        'modified' => true,
+        'auth' => true,
+        'tag_count' => true,
+        'user' => true,
+        'medias' => true,
     ];
 }

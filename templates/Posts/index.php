@@ -22,7 +22,6 @@ $this->Breadcrumbs->setTemplates([
 ]);
 $this->Breadcrumbs->add('Posts',['plugin'=>'Sasilen/Blog','controller' => 'posts', 'action' => 'index'],['class'=>'breadcrumb-item']);
 $this->Breadcrumbs->add('index',null,['class'=>'breadcrumb-item active']);
-$this->Breadcrumbs->add($this->AuthLink->link($this->Html->image('Blog.ic_note_add_black_24px.svg'),['plugin'=>'Sasilen/Blog','controller'=>'posts','action' => 'add'],['escape'=>false,'class'=>'float-right']));
 foreach ($tags as $tag) :
 	$this->Breadcrumbs->add($tag['label'],['plugin'=>'Sasilen/Blog','controller' => 'posts', 'action' => 'index','?' => ['tags'=> $tag['label'] ] ],['class'=>'badge badge-info ml-1 float-right']);
 endforeach;

@@ -7,6 +7,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Event\EventInterface;
+use ArrayObject;
 
 /**
  * Posts Model
@@ -37,34 +39,8 @@ class PostsTable extends Table
         parent::initialize($config);
 
         $this->addBehavior('Muffin/Tags.Tag');
-        $this->hasMany('Medias',['foreignKey' => 'ref_id']);
-        $this->addBehavior('Proffer.Proffer', [
-		'root' => WWW_ROOT . 'files', // Customise the root upload folder here, or omit to use the default
-		'dir' => 'filename',	// The name of the field to store the folder
-		'thumbnailSizes' => [ // Declare your thumbnails
-			'square' => [	// Define the prefix of your thumbnail
-				'w' => 200,	// Width
-				'h' => 200,	// Height
-				'jpeg_quality'	=> 100
-			],
-			'portrait' => [		// Define a second thumbnail
-				'w' => 100,
-				'h' => 300
-			],
-		],
-		'thumbnailMethod' => 'gd'	// Options are Imagick or Gd
-]);
-/*      $this->addBehavior('Media.Media', [
-          'path' => '../../img/Posts/%f',  // default upload path relative to webroot folder (see below for path parameters)
-          'extensions' => ['jpg','png','gif','bmp','pdf','nef'],
-#          'extensions' => ['jpg', 'png'],   // array of authorized extensions (lowercase)
-          'limit' => 0,           // limit number of upload file. Default: 0 (no limit)
-          'max_width' => 0,         // maximum authorized width for uploaded pictures. Default: 0 (no limitation) 
-          'max_height' => 0,          // maximum authorized height for uploaded pictures. Default: 0 (no limitation)
-          'size' => 0             // maximum autorized size for uploaded pictures (in kb). Default: 0 (no limitation)
-          ]
-        );
- */
+        $this->hasMany('Medias',['foreignKey' => 'ref_id'])->setConditions(['Medias.ref' => 'Blog.Posts']);
+
         $this->setTable('posts');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
@@ -77,7 +53,23 @@ class PostsTable extends Table
             'className' => 'Blog.Users'
         ]);
     }
-
+    /**
+    * Change the multiple upload array of UploadedFile into something which the Cake marshaller understands
+	 *
+	 * @param \Cake\Event\Event $event
+	 * @param \ArrayObject $data
+	 * @param \ArrayObject $options
+	 */
+	public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
+	{
+		$newUploads = [];
+		if (isset($data['medias'])) {
+			foreach ($data['medias'] as $upload) {
+				$newUploads[] = ['file' => $upload];
+			}
+		}
+        $data['medias'] = $newUploads;
+	}
     /**
      * Default validation rules.
      *
@@ -86,31 +78,47 @@ class PostsTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+    $validator
+        ->integer('id')
+        ->notEmptyString('id');
 
-        $validator
-            ->requirePresence('name', 'create')
-            ->notEmpty('name');
+/*    $validator
+        ->scalar('slug')
+        ->maxLength('slug', 255)
+        ->requirePresence('slug', 'create')
+        ->notEmptyString('slug');
+ */
+    $validator
+        ->scalar('name')
+        ->maxLength('name', 255)
+        ->requirePresence('name', 'create')
+        ->notEmptyString('name');
 
-        $validator
-            ->requirePresence('summary', 'create')
-            ->notEmpty('summary');
+    $validator
+        ->scalar('summary')
+        ->maxLength('summary', 16777215)
+        ->requirePresence('summary', 'create')
+        ->notEmptyString('summary');
 
-        $validator
-            ->requirePresence('body', 'create')
-            ->notEmpty('body');
+    $validator
+        ->scalar('body')
+        ->maxLength('body', 16777215)
+        ->requirePresence('body', 'create')
+        ->notEmptyString('body');
 
-        $validator
-            ->boolean('online')
-            ->allowEmpty('online');
+    $validator
+        ->boolean('online')
+        ->allowEmptyString('online');
 
-        $validator
-            ->boolean('auth')
-            ->allowEmpty('auth');
+    $validator
+        ->boolean('auth')
+        ->allowEmptyString('auth');
 
-        return $validator;
+    $validator
+        ->integer('tag_count')
+        ->allowEmptyString('tag_count');
+
+    return $validator;
     }
 
     /**
