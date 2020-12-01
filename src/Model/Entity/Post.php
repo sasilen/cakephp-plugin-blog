@@ -35,8 +35,7 @@ class Post extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => true,
-//        'slug' => true,
+/*        'id' => true,
         'name' => true,
         'summary' => true,
         'body' => true,
@@ -47,6 +46,6 @@ class Post extends Entity
         'auth' => true,
         'tag_count' => true,
         'user' => true,
-        'medias' => true,
+        'medias' => true,*/
     ];
 }

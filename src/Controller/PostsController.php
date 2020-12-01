@@ -80,7 +80,6 @@ class PostsController extends AppController
         $post = $this->Posts->newEmptyEntity();
         if ($this->request->is('post')) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
-    //        debug($post);
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__('The post has been saved.'));
 

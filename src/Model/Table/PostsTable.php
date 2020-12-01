@@ -39,7 +39,7 @@ class PostsTable extends Table
         parent::initialize($config);
 
         $this->addBehavior('Muffin/Tags.Tag');
-        $this->hasMany('Medias',['foreignKey' => 'ref_id'])->setConditions(['Medias.ref' => 'Blog.Posts']);
+        $this->hasMany('Medias',['foreignKey' => 'ref_id']);//->setConditions(['Medias.ref' => 'Blog.Posts']);
 
         $this->setTable('posts');
         $this->setDisplayField('name');
